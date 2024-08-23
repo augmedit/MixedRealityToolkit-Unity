@@ -40,8 +40,8 @@ parameters:
     default: None
 
   - name: UnitySerial
-      type: string
-      default: None
+    type: string
+    default: None
 
 steps:
 
