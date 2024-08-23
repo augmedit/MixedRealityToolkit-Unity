@@ -5,4 +5,3 @@ variables:
   # ProjectSettings/ProjectSettings.asset:  bundleVersion: x.x.x
   # ProjectSettings/ProjectSettings.asset:  metroPackageVersion: x.x.x.0
   ProjectVersion: 3.0.0        # used for overall build number of sample projects
-  group: UnityVariables
