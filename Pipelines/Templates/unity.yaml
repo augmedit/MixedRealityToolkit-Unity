@@ -33,6 +33,12 @@ parameters:
 
 steps:
 
+  - pwsh: Install-Module PowerShellGet -Force
+    displayName: Update PowerShellGet
+
+  - pwsh: Install-Module UnitySetup -Scope CurrentUser -Force -AllowPrerelease -RequiredVersion 5.6.161-develop
+    displayName: Install unitysetup.powershell
+
     # Standalone x64 tasks
 
   - ${{ if eq(parameters.Platform, 'Standalone') }}:
