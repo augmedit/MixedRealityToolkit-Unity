@@ -12,7 +12,7 @@ stages:
   - stage: UnityValidation
     variables:
       - group: UnityVariables
-    pool: Unity
+    pool: 'Unity Interactive'
     jobs:
       - job: BuildStandaloneAndTest
         steps:
