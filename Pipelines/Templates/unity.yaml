@@ -68,7 +68,7 @@ steps:
           CommandLineBuildMethod: ${{ parameters.CommandLineBuildMethod }}
           PathToProject: ${{ parameters.PathToProject }}
           OutputPath: $(Build.ArtifactStagingDirectory)/Apps-${{ parameters.Platform }}/exe-x64/${{ parameters.ProjectName }}.exe
-          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.3.5:80 -username ${{ parameters.UnityUsername }} -password ${{ parameters.UnityPassword }} -serial ${{ parameters.UnitySerial }}
+          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.3.5 -username ${{ parameters.UnityUsername }} -password ${{ parameters.UnityPassword }} -serial ${{ parameters.UnitySerial }}
 
     # Run tests early, but don't bother if the standalone build failed.
   - ${{ if eq(parameters.RunTests, true) }}:
@@ -77,7 +77,7 @@ steps:
           UnityVersion: ${{ parameters.UnityVersion }}
           BuildTarget: StandaloneWindows64
           PathToProject: ${{ parameters.PathToProject }}
-          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.3.5:80 -noGraphics -username ${{ parameters.UnityUsername }} -password ${{ parameters.UnityPassword }} -serial ${{ parameters.UnitySerial }}
+          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.3.5 -noGraphics -username ${{ parameters.UnityUsername }} -password ${{ parameters.UnityPassword }} -serial ${{ parameters.UnitySerial }}
 
     # UWP tasks
 
