@@ -89,7 +89,7 @@ steps:
           CommandLineBuildMethod: ${{ parameters.CommandLineBuildMethod }}
           PathToProject: ${{ parameters.PathToProject }}
           OutputPath: $(Agent.TempDirectory)/build/uwp
-          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.3.5:80 -username ${{ parameters.UnityUsername }} -password ${{ parameters.UnityPassword }} -serial ${{ parameters.UnitySerial }}
+          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.3.5 -username ${{ parameters.UnityUsername }} -password ${{ parameters.UnityPassword }} -serial ${{ parameters.UnitySerial }}
 
       - pwsh: |
           $manifestPath = "$(Agent.TempDirectory)/build/uwp/${{ parameters.ProjectName }}/Package.appxmanifest"
@@ -114,7 +114,7 @@ steps:
           CommandLineBuildMethod: ${{ parameters.CommandLineBuildMethod }}
           PathToProject: ${{ parameters.PathToProject }}
           OutputPath: $(Build.ArtifactStagingDirectory)/Apps-${{ parameters.Platform }}/apk/${{ parameters.ProjectName }}.apk
-          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.3.5:80 -username ${{ parameters.UnityUsername }} -password ${{ parameters.UnityPassword }} -serial ${{ parameters.UnitySerial }}
+          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.3.5 -username ${{ parameters.UnityUsername }} -password ${{ parameters.UnityPassword }} -serial ${{ parameters.UnitySerial }}
 
     # Publishing tasks
 
