@@ -28,6 +28,7 @@ stages:
               UnitySerial: $(UnitySerial)
 
       - job: BuildUWP
+        condition: false
         steps:
           - checkout: self
             fetchDepth: 3
@@ -40,6 +41,7 @@ stages:
               UnitySerial: $(UnitySerial)
 
       - job: BuildAndroid
+        condition: false
         steps:
           - checkout: self
             fetchDepth: 3
