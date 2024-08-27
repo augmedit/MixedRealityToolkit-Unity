@@ -629,7 +629,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
         /// </summary>
         /// <remarks>
         /// If <see langword="true"/> is returned, this function should be called again, with
-        /// <paramref name="isSecondPass"/> set to <see langword="true"/>, at least one frame from the 
+        /// <paramref name="isSecondPass"/> set to <see langword="true"/>, at least one frame from the
         /// current frame. This will allow for <see cref="Canvas"/> elements to compute their layouts.
         /// </remarks>
         /// <param name="isSecondPass">
@@ -767,8 +767,11 @@ namespace MixedReality.Toolkit.SpatialManipulation
                         Quaternion currentQuat = Quaternion.LookRotation(currentDir, currentManipulationAxis);
                         Quaternion goalRotation = (currentQuat * Quaternion.Inverse(initQuat)) * initialTransformOnGrabStart.Rotation;
 
+                        /*
+                        //TODO TomM: Fix in MRTK3. Remove here
                         Quaternion rotationDelta = goalRotation * Quaternion.Inverse(initialTransformOnGrabStart.Rotation);
                         Vector3 goalPosition = initialAnchorOnGrabStart + (rotationDelta * initialAnchorDeltaOnGrabStart);
+                        */
 
                         MixedRealityTransform constraintRotation = MixedRealityTransform.NewRotate(goalRotation);
 
@@ -776,6 +779,12 @@ namespace MixedReality.Toolkit.SpatialManipulation
                         {
                             constraintsManager.ApplyRotationConstraints(ref constraintRotation, true, currentHandle.IsGrabSelected);
                         }
+
+                        /*
+                        //TODO TomM: Fix in MRTK3. Add here and change 'goalRotation' to 'constraintRotation.Rotation'
+                        */
+                        Quaternion rotationDelta = constraintRotation.Rotation * Quaternion.Inverse(initialTransformOnGrabStart.Rotation);
+                        Vector3 goalPosition = initialAnchorOnGrabStart + (rotationDelta * initialAnchorDeltaOnGrabStart);
 
                         // TODO: Elastics integration (soon!)
 
