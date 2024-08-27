@@ -6,52 +6,49 @@
 variables:
   - template: Config/settings.yaml
 
-resources:
-  repositories:
-    - repository: PipelineTools
-      type: git
-      endpoint: ToolsAccess
-      name: tools.internal
-      ref: 78ecf591964ecf511b4c7a0cd84d98ce11e8be16
-
 trigger: none # disable CI
 
 stages:
   - stage: UnityValidation
+    variables:
+      - group: UnityVariables
+    pool: 'Unity Interactive'
     jobs:
       - job: BuildStandaloneAndTest
-        pool: Unity_2021.3.21f1_Pool
         steps:
           - checkout: self
             fetchDepth: 3
-
-          - checkout: PipelineTools
 
           - template: Templates/unity.yaml
             parameters:
               Platform: Standalone
               RunTests: true
+              UnityUsername: $(UnityUsername) 
+              UnityPassword: $(UnityPassword)
+              UnitySerial: $(UnitySerial)
 
       - job: BuildUWP
-        pool: Unity_2021.3.21f1_Pool
+        condition: false
         steps:
           - checkout: self
             fetchDepth: 3
-
-          - checkout: PipelineTools
 
           - template: Templates/unity.yaml
             parameters:
               Platform: UWP
+              UnityUsername: $(UnityUsername) 
+              UnityPassword: $(UnityPassword)
+              UnitySerial: $(UnitySerial)
 
       - job: BuildAndroid
-        pool: Unity_2021.3.21f1_Pool
+        condition: false
         steps:
           - checkout: self
             fetchDepth: 3
 
-          - checkout: PipelineTools
-
           - template: Templates/unity.yaml
             parameters:
               Platform: Android
+              UnityUsername: $(UnityUsername) 
+              UnityPassword: $(UnityPassword)
+              UnitySerial: $(UnitySerial)
