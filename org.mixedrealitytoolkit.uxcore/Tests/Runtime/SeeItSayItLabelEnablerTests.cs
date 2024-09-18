@@ -32,10 +32,6 @@ namespace MixedReality.Toolkit.UX.Runtime.Tests
 
             GameObject testButton = SetUpButton(true, Control.None);
             yield return null;
-            if (Application.isBatchMode)
-            {
-                LogAssert.Expect(LogType.Exception, new Regex("Speech recognition is not supported on this machine"));
-            }
 
             Transform label = testButton.transform.GetChild(0);
 
@@ -76,10 +72,6 @@ namespace MixedReality.Toolkit.UX.Runtime.Tests
 
             GameObject testButton = SetUpButton(true, Control.Canvas);
             yield return null;
-            if (Application.isBatchMode)
-            {
-                LogAssert.Expect(LogType.Exception, new Regex("Speech recognition is not supported on this machine"));
-            }
 
             Transform label = testButton.transform.GetChild(0);
             RectTransform sublabel = label.transform.GetChild(0) as RectTransform;
@@ -102,10 +94,6 @@ namespace MixedReality.Toolkit.UX.Runtime.Tests
 
             GameObject testButton = SetUpButton(true, Control.NonCanvas);
             yield return null;
-            if (Application.isBatchMode)
-            {
-                LogAssert.Expect(LogType.Exception, new Regex("Speech recognition is not supported on this machine"));
-            }
 
             Transform label = testButton.transform.GetChild(0);
             Assert.AreEqual(label.transform.localPosition, new Vector3(10f, -.504f, -.004f), "Label is positioned correctly");
