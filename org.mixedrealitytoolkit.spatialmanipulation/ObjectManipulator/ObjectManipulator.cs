@@ -551,7 +551,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
         {
             base.Reset();
             ApplyRequiredSettings();
-            selectMode = InteractableSelectMode.Multiple;
+            selectMode = UnityEngine.XR.Interaction.Toolkit.Interactables.InteractableSelectMode.Multiple;
         }
 
         /// <summary>
@@ -609,7 +609,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
             };
         }
 
-        private InteractionFlags GetInteractionFlagsFromInteractor(IXRInteractor interactor)
+        private InteractionFlags GetInteractionFlagsFromInteractor(UnityEngine.XR.Interaction.Toolkit.Interactors.IXRInteractor interactor)
         {
             InteractionFlags flags = InteractionFlags.None;
             if (interactor is IGrabInteractor)
@@ -635,7 +635,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
         }
 
         /// <inheritdoc />
-        public override bool IsSelectableBy(IXRSelectInteractor interactor)
+        public override bool IsSelectableBy(UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor interactor)
         {
             return base.IsSelectableBy(interactor) && AllowedInteractionTypes.IsMaskSet(GetInteractionFlagsFromInteractor(interactor));
         }
@@ -714,7 +714,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
                 // if this is the last select event!
                 if (rigidBody != null && interactorsSelecting.Count == 0)
                 {
-                    ReleaseRigidBody(rigidBody.velocity, rigidBody.angularVelocity);
+                    ReleaseRigidBody(rigidBody.linearVelocity, rigidBody.angularVelocity);
                 }
             }
         }
@@ -804,7 +804,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
         {
             Vector3 sumPos = Vector3.zero;
             int count = 0;
-            foreach (IXRSelectInteractor interactor in interactorsSelecting)
+            foreach (UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor interactor in interactorsSelecting)
             {
                 sumPos += interactor.GetAttachTransform(this).position;
                 count++;
@@ -869,7 +869,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
             // when player is moving, we need to anticipate where the targetTransform is going to be one time step from now
             distance -= referenceFrameVelocity * Time.fixedDeltaTime;
 
-            var velocity = rigidBody.velocity;
+            var velocity = rigidBody.linearVelocity;
 
             var acceleration = omega * omega * -distance;  // acceleration caused by spring force
 
@@ -898,7 +898,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
 
             velocity += referenceFrameVelocity;  // change back to global frame of reference
 
-            rigidBody.velocity = velocity;
+            rigidBody.linearVelocity = velocity;
 
             if (applyTorque)
             {
@@ -970,7 +970,7 @@ namespace MixedReality.Toolkit.SpatialManipulation
                 {
                     if (releaseBehavior.IsMaskSet(ReleaseBehaviorType.KeepVelocity))
                     {
-                        rigidBody.velocity = velocity;
+                        rigidBody.linearVelocity = velocity;
                     }
 
                     if (releaseBehavior.IsMaskSet(ReleaseBehaviorType.KeepAngularVelocity))
@@ -987,14 +987,14 @@ namespace MixedReality.Toolkit.SpatialManipulation
         /// Gets the absolute device (grip) rotation associated with the specified interactor.
         /// Used to query actual grabbing rotation, vs a ray rotation.
         /// </summary>
-        private bool TryGetGripRotation(IXRSelectInteractor interactor, out Quaternion rotation)
+        private bool TryGetGripRotation(UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor interactor, out Quaternion rotation)
         {
             // We need to query the raw device rotation from the interactor; however,
             // the controller may have its rotation bound to the pointerRotation, which is unsuitable
             // for modeling rotations with far rays. Therefore, we cast down to the base TrackedDevice,
             // and query the device rotation directly. If any of this can't be casted, we return the
             // interactor's attachTransform's rotation.
-            if (interactor is XRBaseControllerInteractor controllerInteractor &&
+            if (interactor is UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInputInteractor controllerInteractor &&
                 controllerInteractor.xrController is ActionBasedController abController &&
                 abController.rotationAction.action?.activeControl?.device is TrackedDevice device)
             {

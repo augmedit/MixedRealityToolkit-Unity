@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+
 
 namespace MixedReality.Toolkit.Input
 {
@@ -18,7 +18,7 @@ namespace MixedReality.Toolkit.Input
     {
         [SerializeField]
         [Tooltip("The set of near interactors that belongs to near interaction")]
-        private List<XRBaseInteractor> nearInteractors;
+        private List<UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor> nearInteractors;
 
         /// <inheritdoc />
         public override bool IsModeDetected()
@@ -28,7 +28,7 @@ namespace MixedReality.Toolkit.Input
 
         private bool IsNearInteractorSelecting()
         {
-            foreach (XRBaseInteractor nearInteractor in nearInteractors)
+            foreach (UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor nearInteractor in nearInteractors)
             {
                 if (nearInteractor.hasSelection)
                 {

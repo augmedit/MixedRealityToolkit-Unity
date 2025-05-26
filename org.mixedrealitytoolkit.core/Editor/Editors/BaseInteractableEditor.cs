@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.XR.Interaction.Toolkit;
+
 using UnityEngine;
 
 namespace MixedReality.Toolkit.Editor
@@ -12,7 +12,7 @@ namespace MixedReality.Toolkit.Editor
     /// A base class for custom <see cref="MRTKBaseInteractable"/> editors.
     /// </summary>
     [CustomEditor(typeof(MRTKBaseInteractable), true)]
-    public class BaseInteractableEditor : XRBaseInteractableEditor
+    public class BaseInteractableEditor : UnityEditor.XR.Interaction.Toolkit.Interactables.XRBaseInteractableEditor
     {
         private SerializedProperty isGazeHovered;
         private SerializedProperty isGazePinchHovered;
