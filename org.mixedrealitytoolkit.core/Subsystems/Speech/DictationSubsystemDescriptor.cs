@@ -36,7 +36,7 @@ namespace MixedReality.Toolkit.Subsystems
         /// <summary>
         /// Initializes a new instance of the <see cref="DictationSubsystemDescriptor"/> class.
         /// </summary>
-        /// <param name='cinfo'>The parameters required to initialize the descriptor.</param>
+        /// <param name="cinfo">The parameters required to initialize the descriptor.</param>
         DictationSubsystemDescriptor(DictationSubsystemCinfo cinfo) : base(cinfo)
         {
             IsCloudBased = cinfo.IsCloudBased;
@@ -59,15 +59,15 @@ namespace MixedReality.Toolkit.Subsystems
         /// </returns>
         internal static DictationSubsystemDescriptor Create(DictationSubsystemCinfo cinfo)
         {
-           // Validates cinfo.
-           if (!XRSubsystemHelpers.CheckTypes<DictationSubsystem, DictationSubsystem.Provider>(cinfo.Name,
-                                                                                                               cinfo.SubsystemTypeOverride,
-                                                                                                               cinfo.ProviderType))
-           {
-               throw new ArgumentException("Could not create DictationSubsystemDescriptor.");
-           }
+            // Validates cinfo.
+            if (!XRSubsystemHelpers.CheckTypes<DictationSubsystem, DictationSubsystem.Provider>(cinfo.Name,
+                                                                                                                cinfo.SubsystemTypeOverride,
+                                                                                                                cinfo.ProviderType))
+            {
+                throw new ArgumentException("Could not create DictationSubsystemDescriptor.");
+            }
 
-           return new DictationSubsystemDescriptor(cinfo);
+            return new DictationSubsystemDescriptor(cinfo);
         }
     }
 }

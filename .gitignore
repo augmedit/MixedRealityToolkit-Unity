@@ -35,6 +35,7 @@ obj/
 # Visual Studio Code Generated #
 # ============================ #
 .vscode/
+*.lscache
 
 # ===================== #
 # Project Specific List #
@@ -58,6 +59,7 @@ doc/
 # Other files #
 # =========== #
 .DS_Store
+.utmp/
 
 # ================================#
 # MRTK2 for branch switching ease #

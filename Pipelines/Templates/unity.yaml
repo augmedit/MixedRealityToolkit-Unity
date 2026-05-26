@@ -16,7 +16,7 @@ parameters:
 
   - name: PathToProject
     type: string
-    default: $(Build.SourcesDirectory)/UnityProjects/MRTKDevTemplate
+    default: $(Build.SourcesDirectory)/MixedRealityToolkit-Unity/UnityProjects/MRTKDevTemplate
 
   - name: RunTests
     type: boolean
@@ -31,25 +31,14 @@ parameters:
       - UWP
       - Android
 
-  - name: UnityUsername
-    type: string
-    default: None
-
-  - name: UnityPassword
-    type: string
-    default: None
-
-  - name: UnitySerial
-    type: string
-    default: None
-
 steps:
-
   - pwsh: Install-Module PowerShellGet -Force
     displayName: Update PowerShellGet
 
   - pwsh: Install-Module UnitySetup -Scope CurrentUser -Force -AllowPrerelease -RequiredVersion 5.6.161-develop
     displayName: Install unitysetup.powershell
+
+  - template: license-unity.yaml
 
     # Standalone x64 tasks
 
@@ -61,7 +50,7 @@ steps:
           CommandLineBuildMethod: ${{ parameters.CommandLineBuildMethod }}
           PathToProject: ${{ parameters.PathToProject }}
           OutputPath: $(Build.ArtifactStagingDirectory)/Apps-${{ parameters.Platform }}/exe-x64/${{ parameters.ProjectName }}.exe
-          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.3.5 -username ${{ parameters.UnityUsername }} -password ${{ parameters.UnityPassword }} -serial ${{ parameters.UnitySerial }}
+          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.0.6 -cacheServerNamespacePrefix MRTK3 -cacheServerEnableDownload true -cacheServerEnableUpload true
 
     # Run tests early, but don't bother if the standalone build failed.
   - ${{ if eq(parameters.RunTests, true) }}:
@@ -70,7 +59,7 @@ steps:
           UnityVersion: ${{ parameters.UnityVersion }}
           BuildTarget: StandaloneWindows64
           PathToProject: ${{ parameters.PathToProject }}
-          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.3.5 -noGraphics -username ${{ parameters.UnityUsername }} -password ${{ parameters.UnityPassword }} -serial ${{ parameters.UnitySerial }}
+          AdditionalArguments: -noGraphics -EnableCacheServer -cacheServerEndpoint 10.0.0.6 -cacheServerNamespacePrefix MRTK3 -cacheServerEnableDownload true
 
     # UWP tasks
 
@@ -82,7 +71,7 @@ steps:
           CommandLineBuildMethod: ${{ parameters.CommandLineBuildMethod }}
           PathToProject: ${{ parameters.PathToProject }}
           OutputPath: $(Agent.TempDirectory)/build/uwp
-          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.3.5 -username ${{ parameters.UnityUsername }} -password ${{ parameters.UnityPassword }} -serial ${{ parameters.UnitySerial }}
+          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.0.6 -cacheServerNamespacePrefix MRTK3 -cacheServerEnableDownload true -cacheServerEnableUpload true
 
       - pwsh: |
           $manifestPath = "$(Agent.TempDirectory)/build/uwp/${{ parameters.ProjectName }}/Package.appxmanifest"
@@ -107,7 +96,6 @@ steps:
           CommandLineBuildMethod: ${{ parameters.CommandLineBuildMethod }}
           PathToProject: ${{ parameters.PathToProject }}
           OutputPath: $(Build.ArtifactStagingDirectory)/Apps-${{ parameters.Platform }}/apk/${{ parameters.ProjectName }}.apk
-          AdditionalArguments: -EnableCacheServer -cacheServerEndpoint 10.0.3.5 -username ${{ parameters.UnityUsername }} -password ${{ parameters.UnityPassword }} -serial ${{ parameters.UnitySerial }}
 
     # Publishing tasks
 

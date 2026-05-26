@@ -71,7 +71,7 @@ namespace MixedReality.Toolkit.Input
         public void InitializeControllers()
         {
             controllerMapping.Clear();
-            foreach (XRController xrController in FindObjectUtility.FindObjectsByType<XRController>())
+            foreach (XRBaseController xrController in FindObjectUtility.FindObjectsByType<XRBaseController>())
             {
                 if (!controllerMapping.ContainsKey(xrController.gameObject))
                 {
@@ -296,6 +296,17 @@ namespace MixedReality.Toolkit.Input
 
             // Go find all detectors.
             InitializeInteractionModeDetectors();
+        }
+
+        /// <summary>
+        /// A Unity event function that is called when the script component has been destroyed.
+        /// </summary>
+        private void OnDestroy()
+        {
+            if (InteractionManager != null)
+            {
+                InteractionManager.interactorRegistered -= OnInteractorRegistered;
+            }
         }
 
         /// <summary>

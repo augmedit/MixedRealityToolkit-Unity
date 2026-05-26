@@ -1,8 +1,9 @@
-name: "PR Labeling"
+name: PR Labeling
+
 on:
   pull_request_target:
     types: [opened, closed, synchronize, reopened, edited, ready_for_review]
-  
+
 permissions:
   contents: read
   pull-requests: write
@@ -11,26 +12,26 @@ jobs:
   label-pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v8
         with:
           script: |
-            if (context.payload.pull_request.base.ref == 'mrtk3')
+            if (context.payload.pull_request.base.ref == 'feature/XRI3')
             {
               github.rest.issues.addLabels({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                labels: ['MRTK3']
+                labels: ['Branch: feature/XRI3']
               })
             }
 
-            // When we switch the repo to MRTK3, we'll have to edit this.
+            // When we switch the repo to XRI3, we'll have to edit this.
             if (context.payload.pull_request.base.ref == 'main')
             {
               github.rest.issues.addLabels({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                labels: ['MRTK2']
+                labels: ['Branch: main']
               })
             }
